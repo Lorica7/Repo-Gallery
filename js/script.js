@@ -3,6 +3,8 @@ const userName = "Lorica7";
 const overview = document.querySelector(".overview");
 const newDiv = document.createElement('div');
 const ul = document.querySelector(".repo-list");
+const repoSection = document.querySelector(".repos");
+const repoData = document.querySelector(".repo-data");
 
 
 const getUser = async () => {
@@ -73,7 +75,23 @@ function displayRepos(repos){
 
 }
 
+const repoList = ul.addEventListener("click", function (e) {
+    if (e.target.matches("h3")) {
+        const repoName = e.target.innerText;
+        console.log(typeof(repoName));
+        getInfo(repoName);
+    }
+})
+
+const getInfo = async function (repoName) {
+    const data = await fetch(`https://api.github.com/users/${userName}/repos/${userName}/${repoName}`);
+    const repoInfo = await data.json();
+    console.log(repoInfo)
+}
+
+
 
 getUser();
 
 getRepos();
+
