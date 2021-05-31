@@ -77,14 +77,18 @@ h1 {
     margin-right: 8px;
 }
 
-.strong{
-    font-weight: bold;
+figure{
+    display: flex;
+}
+
+img {
+    display: flex;
 }
 
 h3 {
     width: 100%;
     text-align: center;
-    color: #f86d58;
+    color: #00c5d5;
 }
 
 ul {
@@ -116,6 +120,7 @@ ul {
     font-size: 18px;
     padding-bottom: 2em;
 }
+
 
 .user-info figure {
     width: 90%;

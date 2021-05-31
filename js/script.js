@@ -1,8 +1,11 @@
 const userName = "Lorica7";
 
 const overview = document.querySelector(".overview");
+const newDiv = document.createElement('div');
+const ul = document.querySelector(".repo-list");
 
-const getUser = async function () {
+
+const getUser = async () => {
     const url = `https://api.github.com/users/${userName}`;
     const data = await fetch(url);
     const resData = await data.json();
@@ -11,7 +14,6 @@ const getUser = async function () {
 }
 
 function displayUser(data) {
-    const newDiv = document.createElement('div');
     newDiv.classList.add("user-info");
 
     const number = data.public_repos;
@@ -23,7 +25,7 @@ function displayUser(data) {
     createNewEl("Location", data.location);
     createNewEl("Number of Repos", number);
 
-  
+  overview.append(newDiv)
 }
 
 function createNewEl(text, dataItem) {
@@ -32,8 +34,9 @@ function createNewEl(text, dataItem) {
     pTag.append(strong);
     strong.innerText = `${text}: `;
     const textN = document.createTextNode(dataItem);
+    pTag.classList.add("pStyle");
     pTag.append(textN);
-    overview.append(pTag);
+    newDiv.append(pTag);
 }
 
 function createPicEl(data) {
@@ -42,9 +45,35 @@ function createPicEl(data) {
 
     img.setAttribute("src", data);
     img.setAttribute("alt", "user avatar");
+    
     fig.append(img);
-    overview.append(fig);
+    newDiv.append(fig);
+}
+
+
+const getRepos = async () => {
+    const url = `https://api.github.com/users/${userName}/repos?sort=update&per_page=100`;
+    const data = await fetch(url);
+    const resData = await data.json();
+    console.log(resData)
+    displayRepos(resData);
+}
+
+function displayRepos(repos){
+    repos.forEach(function (item) {
+        const li = document.createElement("li");
+        li.classList.add("repo");
+
+        const heading = document.createElement("h3");
+        heading.innerText = item.name;
+
+        li.append(heading);
+        ul.append(li);
+})
+
 }
 
 
 getUser();
+
+getRepos();
