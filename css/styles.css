@@ -77,6 +77,10 @@ h1 {
     margin-right: 8px;
 }
 
+.strong{
+    font-weight: bold;
+}
+
 h3 {
     width: 100%;
     text-align: center;
