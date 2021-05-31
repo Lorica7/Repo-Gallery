@@ -15,14 +15,16 @@ function displayUser(data) {
     newDiv.classList.add("user-info");
 
     const number = data.public_repos;
+    const photo = data.avatar_url;
 
+    createPicEl(photo);
     createNewEl("Name", data.name);
     createNewEl("Bio", data.bio);
     createNewEl("Location", data.location);
-    createNewEl("Number of Repos", number)
+    createNewEl("Number of Repos", number);
 
+  
 }
-
 
 function createNewEl(text, dataItem) {
     const strong = document.createElement("strong");
@@ -33,5 +35,16 @@ function createNewEl(text, dataItem) {
     pTag.append(textN);
     overview.append(pTag);
 }
+
+function createPicEl(data) {
+    let fig = document.createElement("figure");
+    let img = document.createElement("img");
+
+    img.setAttribute("src", data);
+    img.setAttribute("alt", "user avatar");
+    fig.append(img);
+    overview.append(fig);
+}
+
 
 getUser();
