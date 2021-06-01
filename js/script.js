@@ -91,6 +91,7 @@ const repoList = ul.addEventListener("click", function (e) {
 })
 
 const getInfo = async function (repoName) {
+    inputFilter.classList.remove("hide");
     const data = await fetch(`https://api.github.com/repos/${userName}/${repoName}`);
     const repoInfo = await data.json();
     console.log(repoInfo)
@@ -109,7 +110,7 @@ const getInfo = async function (repoName) {
   
 
 function displayRepo(repoInfo, languages) {
-    inputFilter.classList.remove("hide");
+   
     repoData.innerHTML = '';
 
     const heading = document.createElement('h3');
@@ -147,6 +148,23 @@ viewBtn.addEventListener("click", function () {
     repoSection.classList.remove("hide");
     repoData.classList.add("hide");
     viewBtn.classList.add("hide");
+});
+
+inputFilter.addEventListener("input", function (e) {
+    const searchReq = e.target.value;
+    console.log(searchReq);
+
+    const repos = document.querySelectorAll(".repo");
+  const searchLowerC= searchReq.toLowerCase();
+  
+    for (let repo of repos) {
+    const repoLowerC = repo.innerText.toLowerCase();
+    if (repoLowerC.includes(searchLowerC)) {
+      repo.classList.remove("hide");
+    } else {
+      repo.classList.add("hide");
+    }
+  }
 })
 
 getUser();
