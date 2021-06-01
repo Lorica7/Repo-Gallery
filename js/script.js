@@ -5,6 +5,8 @@ const newDiv = document.createElement('div');
 const ul = document.querySelector(".repo-list");
 const repoSection = document.querySelector(".repos");
 const repoData = document.querySelector(".repo-data");
+const viewBtn = document.querySelector('.view-repos');
+const inputFilter = document.querySelector(".filter-repos");
 
 function makePTag() {
     const newP = document.createElement("p");
@@ -107,6 +109,7 @@ const getInfo = async function (repoName) {
   
 
 function displayRepo(repoInfo, languages) {
+    inputFilter.classList.remove("hide");
     repoData.innerHTML = '';
 
     const heading = document.createElement('h3');
@@ -126,19 +129,25 @@ function displayRepo(repoInfo, languages) {
 
     const aTag = document.createElement("a");
     aTag.setAttribute("class", "visit");
-    aTag.setAttribute("href", repoData.html_url);
+    aTag.setAttribute("href", repoInfo.html_url);
     aTag.setAttribute("target", "_blank");
     aTag.setAttribute("rel", "noreferrer noopener");
     aTag.innerText = "View Repo on GitHub";
     const breaker3 = document.createElement("br");
-    repoData.append(aTag)
+    repoData.append(aTag);
     repoData.append(breaker3);
 
-    repoData.classList.remove("hide")
-
-     
+    repoData.classList.remove("hide");
+    repoSection.classList.add("hide");
+    viewBtn.classList.remove("hide");
+  
 }
 
+viewBtn.addEventListener("click", function () {
+    repoSection.classList.remove("hide");
+    repoData.classList.add("hide");
+    viewBtn.classList.add("hide");
+})
 
 getUser();
 
