@@ -6,6 +6,11 @@ const ul = document.querySelector(".repo-list");
 const repoSection = document.querySelector(".repos");
 const repoData = document.querySelector(".repo-data");
 
+function makePTag() {
+    const newP = document.createElement("p");
+    return newP;
+}
+
 
 const getUser = async () => {
     const url = `https://api.github.com/users/${userName}`;
@@ -84,11 +89,55 @@ const repoList = ul.addEventListener("click", function (e) {
 })
 
 const getInfo = async function (repoName) {
-    const data = await fetch(`https://api.github.com/users/${userName}/repos/${userName}/${repoName}`);
+    const data = await fetch(`https://api.github.com/repos/${userName}/${repoName}`);
     const repoInfo = await data.json();
     console.log(repoInfo)
+   
+    
+    const getLanguages = await fetch(repoInfo.languages_url);
+    const languageData = await getLanguages.json();
+  
+   
+    const langList = [];
+    for (const item in languageData) {
+        langList.push(item);
+    }
+    displayRepo(repoInfo, langList);
 }
+  
 
+function displayRepo(repoInfo, languages) {
+    repoData.innerHTML = '';
+
+    const heading = document.createElement('h3');
+    heading.innerText = `Name: ${repoInfo.name}`;
+    repoData.append(heading);
+
+    const desc = makePTag().innerText = `Description: ${repoInfo.description}`;
+    repoData.append(desc);
+
+    const breaker = document.createElement("br");
+    repoData.append(breaker);
+
+    const languageP = makePTag().innerText = `Languages: ${languages.join(", ")}`;
+    repoData.append(languageP);
+    const breaker2 = document.createElement("br");
+    repoData.append(breaker2);
+
+    const aTag = document.createElement("a");
+    aTag.setAttribute("class", "visit");
+    aTag.setAttribute("href", repoData.html_url);
+    aTag.setAttribute("target", "_blank");
+    aTag.setAttribute("rel", "noreferrer noopener");
+    aTag.innerText = "View Repo on GitHub";
+    const breaker3 = document.createElement("br");
+    repoData.append(aTag)
+    repoData.append(breaker3);
+
+    repoData.classList.remove("hide")
+
+     
+}
 
 
 getUser();
